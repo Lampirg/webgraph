@@ -1,6 +1,6 @@
 package dev.lampirg.webgraph;
 
-import dev.lampirg.webgraph.consume.ResidentSearcher;
+import dev.lampirg.webgraph.consume.SwapiResidentSearcher;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -13,17 +13,17 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @SpringBootTest
-@DisplayName("Integration test ResidentSearcher")
-class ResidentSearcherIntegrationTests {
+@DisplayName("Integration test SwapiResidentSearcher")
+class SwapiResidentSearcherIntegrationTests {
 
     @Autowired
-    private ResidentSearcher residentSearcher;
+    private SwapiResidentSearcher residentSearcher;
 
     @Test
     @DisplayName("Test Luke Skywalker")
     @SneakyThrows
     void givenLuke() {
-        List<String> actual = residentSearcher.getLanguage("Luke Skywalker")
+        List<String> actual = residentSearcher.findResidentsFromSamePlanet("Luke Skywalker")
                 .collectList()
                 .block();
         Assertions.assertThat(actual)
@@ -35,7 +35,7 @@ class ResidentSearcherIntegrationTests {
     @DisplayName("Test nonexistent resident")
     void givenNoResidents() {
         Mono<List<String>> actual = residentSearcher
-                .getLanguage("I made that up")
+                .findResidentsFromSamePlanet("I made that up")
                 .collectList();
         Assertions.assertThatThrownBy(actual::block).isInstanceOf(NoSuchElementException.class);
     }

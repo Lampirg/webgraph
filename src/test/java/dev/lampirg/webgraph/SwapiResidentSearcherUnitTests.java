@@ -1,6 +1,6 @@
 package dev.lampirg.webgraph;
 
-import dev.lampirg.webgraph.consume.ResidentSearcher;
+import dev.lampirg.webgraph.consume.SwapiResidentSearcher;
 import lombok.SneakyThrows;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -21,18 +21,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@DisplayName("Unit test ResidentSearcher")
-class ResidentSearcherUnitTests {
+@DisplayName("Unit test SwapiResidentSearcher")
+class SwapiResidentSearcherUnitTests {
 
-    private ResidentSearcher residentSearcher;
+    private SwapiResidentSearcher residentSearcher;
 
     private MockWebServer mockWebServer;
 
     private Resource response;
 
-    public ResidentSearcherUnitTests() {
+    public SwapiResidentSearcherUnitTests() {
         mockWebServer = new MockWebServer();
-        residentSearcher = new ResidentSearcher(
+        residentSearcher = new SwapiResidentSearcher(
                 WebClient.create(mockWebServer.url("/").toString()),
                 mockWebServer.url("/").toString(),
                 new ClassPathResource("json/input.graphql")
@@ -66,13 +66,13 @@ class ResidentSearcherUnitTests {
     @SneakyThrows
     void givenThreeResidents() {
         List<String> expected = List.of("C-3PO", "Darth Vader");
-        List<String> actual = residentSearcher.getLanguage("Luke Skywalker")
+        List<String> actual = residentSearcher.findResidentsFromSamePlanet("Luke Skywalker")
                 .collectList()
                 .block();
         Assertions.assertThat(actual).hasSameElementsAs(expected);
         enqueue();
         expected = List.of("Luke Skywalker", "Darth Vader");
-        actual = residentSearcher.getLanguage("C-3PO")
+        actual = residentSearcher.findResidentsFromSamePlanet("C-3PO")
                 .collectList()
                 .block();
         Assertions.assertThat(actual).hasSameElementsAs(expected);
@@ -82,7 +82,7 @@ class ResidentSearcherUnitTests {
     @DisplayName("Test resident with no neighbours")
     void givenOneResident() {
         List<String> expected = List.of();
-        List<String> actual = residentSearcher.getLanguage("Kor Ga Gha")
+        List<String> actual = residentSearcher.findResidentsFromSamePlanet("Kor Ga Gha")
                 .collectList()
                 .block();
         Assertions.assertThat(actual).hasSameElementsAs(expected);
@@ -92,7 +92,7 @@ class ResidentSearcherUnitTests {
     @DisplayName("Test nonexistent resident")
     void givenNoResidents() {
         Mono<List<String>> actual = residentSearcher
-                .getLanguage("I made that up")
+                .findResidentsFromSamePlanet("I made that up")
                 .collectList();
         Assertions.assertThatThrownBy(actual::block).isInstanceOf(NoSuchElementException.class);
     }
