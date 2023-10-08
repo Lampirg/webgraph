@@ -1,0 +1,74 @@
+{
+  "data": {
+    "allPeople": {
+      "people": [
+        {
+          "name": "Luke Skywalker",
+          "homeworld": {
+            "residentConnection": {
+              "residents": [
+                {
+                  "name": "Luke Skywalker"
+                },
+                {
+                  "name": "C-3PO"
+                },
+                {
+                  "name": "Darth Vader"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "C-3PO",
+          "homeworld": {
+            "residentConnection": {
+              "residents": [
+                {
+                  "name": "Luke Skywalker"
+                },
+                {
+                  "name": "C-3PO"
+                },
+                {
+                  "name": "Darth Vader"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Darth Vader",
+          "homeworld": {
+            "residentConnection": {
+              "residents": [
+                {
+                  "name": "Luke Skywalker"
+                },
+                {
+                  "name": "C-3PO"
+                },
+                {
+                  "name": "Darth Vader"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Kor Ga Gha",
+          "homeworld": {
+            "residentConnection": {
+              "residents": [
+                {
+                  "name": "Kor Ga Gha"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

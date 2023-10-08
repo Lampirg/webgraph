@@ -1,0 +1,14 @@
+query samePlanet {
+    allPeople {
+        people {
+            name
+            homeworld {
+                residentConnection {
+                    residents {
+                        name
+                    }
+                }
+            }
+        }
+    }
+}
