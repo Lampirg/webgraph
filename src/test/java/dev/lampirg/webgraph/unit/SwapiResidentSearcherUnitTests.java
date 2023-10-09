@@ -1,4 +1,4 @@
-package dev.lampirg.webgraph;
+package dev.lampirg.webgraph.unit;
 
 import dev.lampirg.webgraph.consume.SwapiResidentSearcher;
 import lombok.SneakyThrows;
