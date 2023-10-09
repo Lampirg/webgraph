@@ -19,7 +19,6 @@ public class StarWarsInfoController {
     private final ResidentSearcher residentSearcher;
 
     @GetMapping("/same-residents")
-    @ResponseBody
     public Mono<Residents> findResidentsFromSamePlanet(@RequestParam String name) {
         return residentSearcher.findResidentsFromSamePlanet(name)
                 .map(Resident::new)
