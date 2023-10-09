@@ -2,7 +2,6 @@ package dev.lampirg.webgraph.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -22,18 +21,17 @@ import java.util.Optional;
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
-    @Bean
+
     public ReactiveAuthenticationManager reactiveAuthenticationManager() {
         return authentication -> {
             if (!authentication.getCredentials().equals("aba")) {
                 authentication.setAuthenticated(false);
-                return Mono.error(new AuthenticationCredentialsNotFoundException("No valid credentials."));
+                return Mono.just(authentication);
             }
             return Mono.just(authentication);
         };
     }
 
-    @Bean
     public ServerAuthenticationConverter serverAuthenticationConverter() {
         return exchange -> {
             Optional<String> key = Optional.ofNullable(exchange.getRequest().getHeaders().getFirst("Key"));
@@ -47,7 +45,7 @@ public class SecurityConfig {
         };
     }
 
-    @Bean
+
     public AuthenticationWebFilter filter() {
         AuthenticationWebFilter authenticationWebFilter =
                 new AuthenticationWebFilter(reactiveAuthenticationManager());

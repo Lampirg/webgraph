@@ -61,7 +61,7 @@ class StarWarsInfoControllerSecurityTests {
         testClient.get()
                 .uri("/info/same-residents?name=Luke+Skywalker")
                 .exchange()
-                .expectStatus().isUnauthorized();
+                .expectStatus().isForbidden();
     }
 
     @Test
@@ -70,6 +70,6 @@ class StarWarsInfoControllerSecurityTests {
                 .uri("/info/same-residents?name=Luke+Skywalker")
                 .header("Key", "daba")
                 .exchange()
-                .expectStatus().isUnauthorized();
+                .expectStatus().isForbidden();
     }
 }
