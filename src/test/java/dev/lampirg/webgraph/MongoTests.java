@@ -5,22 +5,32 @@ import dev.lampirg.webgraph.db.EntityInformationProvider;
 import dev.lampirg.webgraph.db.ReactiveMongoApiHolderRepository;
 import org.assertj.core.api.Assertions;
 import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Import;
+import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
 
 @DataMongoTest
+@Testcontainers
 @Import({ReactiveMongoApiHolderRepository.class, EntityInformationProvider.class})
 class MongoTests {
+
+    @Container
+    @ServiceConnection
+    static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:latest");
 
     @Autowired
     private ReactiveMongoApiHolderRepository apiHolderRepository;
 
-    @BeforeEach
+
+    @AfterEach
     void tearDown() {
         apiHolderRepository.deleteAll().block();
     }
