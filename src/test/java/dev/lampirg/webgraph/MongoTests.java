@@ -83,6 +83,17 @@ class MongoTests {
     }
 
     @Test
+    void existsByApiKey() {
+        List<ApiHolder> toSave = createThreeUsers();
+        apiHolderRepository.saveAll(toSave).blockLast();
+        List<String> keys = List.of("key", "invalid_key");
+        boolean actual = apiHolderRepository.existsByApiKey(keys.get(0)).block();
+        Assertions.assertThat(actual).isTrue();
+        actual = apiHolderRepository.existsById(keys.get(1)).block();
+        Assertions.assertThat(actual).isFalse();
+    }
+
+    @Test
     void count() {
         List<ApiHolder> toSave = createThreeUsers();
         apiHolderRepository.saveAll(toSave).blockLast();

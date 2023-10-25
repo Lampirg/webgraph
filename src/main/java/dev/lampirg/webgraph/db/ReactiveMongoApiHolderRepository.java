@@ -23,6 +23,8 @@ public class ReactiveMongoApiHolderRepository implements ApiHolderRepository {
     private final ReactiveMongoTemplate mongoTemplate;
     @Value("username")
     private String idFieldName;
+    @Value("apiKey")
+    private String apiKeyFieldName;
 
     @NotNull
     @Override
@@ -87,6 +89,17 @@ public class ReactiveMongoApiHolderRepository implements ApiHolderRepository {
     @Override
     public Mono<Boolean> existsById(@NotNull Publisher<String> id) {
         return Mono.from(id).flatMap(this::existsById);
+    }
+
+    @Override
+    public Mono<Boolean> existsByApiKey(@NotNull String apiKey) {
+        return mongoTemplate.exists(
+                Query.query(
+                        Criteria.where(apiKeyFieldName).is(apiKey)
+                ),
+                entityInformation.getJavaType(),
+                entityInformation.getCollectionName()
+        );
     }
 
     @NotNull
