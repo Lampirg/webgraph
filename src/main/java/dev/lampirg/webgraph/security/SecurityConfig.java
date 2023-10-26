@@ -55,7 +55,8 @@ public class SecurityConfig {
         http
                 .authorizeExchange(exchangeSpec -> exchangeSpec
                         .pathMatchers("/key/**").hasRole("ADMIN")
-                        .anyExchange().authenticated())
+                        .pathMatchers("/info/**").hasRole("USER")
+                        .anyExchange().permitAll())
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .addFilterAt(filter(), SecurityWebFiltersOrder.AUTHENTICATION);
         return http.build();

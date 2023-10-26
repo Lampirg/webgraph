@@ -1,7 +1,11 @@
 package dev.lampirg.webgraph.controller;
 
-import dev.lampirg.webgraph.service.resident.ResidentSearcher;
 import dev.lampirg.webgraph.model.Resident;
+import dev.lampirg.webgraph.service.resident.ResidentSearcher;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.ErrorResponse;
@@ -18,8 +22,12 @@ public class StarWarsInfoController {
 
     private final ResidentSearcher residentSearcher;
 
+    @Operation(summary = "Find residents from the same planet")
+    @ApiResponse(responseCode = "200", description = "Residents")
+    @ApiResponse(responseCode = "403", description = "No valid api key", content = @Content)
+    @ApiResponse(responseCode = "404", description = "Resident not found", content = @Content)
     @GetMapping("/same-residents")
-    public Mono<Residents> findResidentsFromSamePlanet(@RequestParam String name) {
+    public Mono<Residents> findResidentsFromSamePlanet(@Parameter(description = "Resident to find from") @RequestParam String name) {
         return residentSearcher.findResidentsFromSamePlanet(name)
                 .map(Resident::new)
                 .collectList()
@@ -35,6 +43,7 @@ public class StarWarsInfoController {
         );
     }
 
-    private record Residents(List<Resident> data) {}
+    private record Residents(List<Resident> data) {
+    }
 
 }
