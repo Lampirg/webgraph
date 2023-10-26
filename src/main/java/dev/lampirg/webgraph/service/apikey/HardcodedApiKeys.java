@@ -11,9 +11,9 @@ import reactor.core.publisher.Mono;
 // TODO: replace hardcoded admin
 
 @Configuration
-@Profile("hardcodedAdmin")
+@Profile("hardcode")
 @RequiredArgsConstructor
-public class HardcodedAdmin {
+public class HardcodedApiKeys {
 
     private final ApiKeyService apiKeyService;
 
@@ -24,6 +24,19 @@ public class HardcodedAdmin {
             apiKeyService.containsKey(apiKey)
                     .flatMap(aBoolean -> Boolean.FALSE.equals(aBoolean) ?
                             apiKeyService.save(ApiHolder.admin("Hardcoded Admin User", apiKey)) :
+                            Mono.empty()
+                    )
+                    .block();
+        };
+    }
+
+    @Bean
+    public CommandLineRunner createUser() {
+        return args -> {
+            String apiKey = "USERHRDC";
+            apiKeyService.containsKey(apiKey)
+                    .flatMap(aBoolean -> Boolean.FALSE.equals(aBoolean) ?
+                            apiKeyService.save(ApiHolder.user("Hardcoded User", apiKey)) :
                             Mono.empty()
                     )
                     .block();
