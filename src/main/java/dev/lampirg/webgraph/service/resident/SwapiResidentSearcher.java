@@ -1,4 +1,4 @@
-package dev.lampirg.webgraph.service;
+package dev.lampirg.webgraph.service.resident;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.SneakyThrows;

@@ -1,6 +1,6 @@
 package dev.lampirg.webgraph.controller;
 
-import dev.lampirg.webgraph.service.ResidentSearcher;
+import dev.lampirg.webgraph.service.resident.ResidentSearcher;
 import dev.lampirg.webgraph.model.Resident;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

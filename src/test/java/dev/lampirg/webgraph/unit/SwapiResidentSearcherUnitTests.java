@@ -1,6 +1,6 @@
 package dev.lampirg.webgraph.unit;
 
-import dev.lampirg.webgraph.service.SwapiResidentSearcher;
+import dev.lampirg.webgraph.service.resident.SwapiResidentSearcher;
 import lombok.SneakyThrows;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
