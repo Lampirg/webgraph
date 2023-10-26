@@ -1,6 +1,6 @@
 package dev.lampirg.webgraph.unit;
 
-import dev.lampirg.webgraph.service.ApiKeyService;
+import dev.lampirg.webgraph.service.apikey.ApiKeyService;
 import dev.lampirg.webgraph.controller.AdminController;
 import dev.lampirg.webgraph.db.ApiHolder;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package dev.lampirg.webgraph.service;
+package dev.lampirg.webgraph.service.apikey;
 
 import dev.lampirg.webgraph.db.ApiHolder;
 import lombok.RequiredArgsConstructor;

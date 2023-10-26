@@ -1,4 +1,4 @@
-package dev.lampirg.webgraph.service;
+package dev.lampirg.webgraph.service.apikey.generator;
 
 public interface ApiKeyGenerator {
     String generateApiKey();

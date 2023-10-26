@@ -1,7 +1,8 @@
-package dev.lampirg.webgraph.service;
+package dev.lampirg.webgraph.service.apikey;
 
 import dev.lampirg.webgraph.db.ApiHolder;
 import dev.lampirg.webgraph.db.ApiHolderRepository;
+import dev.lampirg.webgraph.service.apikey.generator.ApiKeyGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
