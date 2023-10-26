@@ -1,6 +1,6 @@
 package dev.lampirg.webgraph.security;
 
-import dev.lampirg.webgraph.consume.ApiKeyService;
+import dev.lampirg.webgraph.service.ApiKeyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

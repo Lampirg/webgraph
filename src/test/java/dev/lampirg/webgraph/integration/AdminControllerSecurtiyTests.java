@@ -1,9 +1,7 @@
 package dev.lampirg.webgraph.integration;
 
-import dev.lampirg.webgraph.consume.ApiKeyService;
+import dev.lampirg.webgraph.service.ApiKeyService;
 import dev.lampirg.webgraph.db.ApiHolder;
-import dev.lampirg.webgraph.db.ApiHolderRepository;
-import dev.lampirg.webgraph.db.ReactiveMongoApiHolderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

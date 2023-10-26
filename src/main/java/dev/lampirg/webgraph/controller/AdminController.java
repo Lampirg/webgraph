@@ -1,6 +1,6 @@
 package dev.lampirg.webgraph.controller;
 
-import dev.lampirg.webgraph.consume.ApiKeyService;
+import dev.lampirg.webgraph.service.ApiKeyService;
 import dev.lampirg.webgraph.db.ApiHolder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

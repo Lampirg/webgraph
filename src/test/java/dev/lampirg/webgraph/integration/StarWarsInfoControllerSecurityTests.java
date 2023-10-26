@@ -1,7 +1,7 @@
 package dev.lampirg.webgraph.integration;
 
-import dev.lampirg.webgraph.consume.ApiKeyService;
-import dev.lampirg.webgraph.consume.ResidentSearcher;
+import dev.lampirg.webgraph.service.ApiKeyService;
+import dev.lampirg.webgraph.service.ResidentSearcher;
 import dev.lampirg.webgraph.db.ApiHolder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

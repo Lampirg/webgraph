@@ -1,4 +1,4 @@
-package dev.lampirg.webgraph.consume;
+package dev.lampirg.webgraph.service;
 
 import dev.lampirg.webgraph.db.ApiHolder;
 import lombok.RequiredArgsConstructor;

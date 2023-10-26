@@ -1,6 +1,6 @@
 package dev.lampirg.webgraph.unit;
 
-import dev.lampirg.webgraph.consume.ResidentSearcher;
+import dev.lampirg.webgraph.service.ResidentSearcher;
 import dev.lampirg.webgraph.controller.StarWarsInfoController;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

@@ -1,6 +1,6 @@
 package dev.lampirg.webgraph.integration;
 
-import dev.lampirg.webgraph.consume.SwapiResidentSearcher;
+import dev.lampirg.webgraph.service.SwapiResidentSearcher;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
