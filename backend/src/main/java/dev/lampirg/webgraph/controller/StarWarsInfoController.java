@@ -17,6 +17,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/info")
+@CrossOrigin
 @RequiredArgsConstructor
 public class StarWarsInfoController {
 
