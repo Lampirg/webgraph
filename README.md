@@ -15,7 +15,7 @@ The service has Swagger UI API docs which can be accessed with ["/swagger-ui"](l
 
 Since you have to run project manually, you can either run both applications (frontend and backend) or run only backend REST API. To do the last you can run command './mvnw spring-boot:run' in [backend directory](backend).
 
-If you want to use both applications, you should also run vue.js app with 'npm run serve -- --port 8081' in [frontend directory](frontend). You can access it with [localshost:8081/](localshost:8081/) path.
+If you want to use both applications, you should also run vue.js app with 'npm run serve -- --port 8081' in [frontend directory](frontend). You can access it with ["localshost:8081/"](localshost:8081/) path.
 
 ## Tech stack
 
