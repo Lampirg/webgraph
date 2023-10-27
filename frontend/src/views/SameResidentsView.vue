@@ -35,6 +35,7 @@ onMounted(() => {
       />
       <p class="note">Try <button class="astext" @click="name = randomName">{{ randomName }}</button></p>
     </div>
+    <h4>Residents:</h4>
     <li v-for="resident in residents" :key="resident">
       {{ resident.name }}
     </li>
