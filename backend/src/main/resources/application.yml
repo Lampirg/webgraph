@@ -2,6 +2,13 @@ spring:
   profiles:
     active:
       - hardcode
+      
+  data:
+    mongodb:
+      host: mongo_db
+      port: 21017
+      database: api-keys
+
 springdoc:
   swagger-ui:
     path: /swagger-ui
