@@ -1,6 +1,6 @@
 # Simple Star Wars statistics
 
-This is a full-stack project that displays simple statistic about characters from Star Wars franchise. Note that this service is made for training purpose rather than polished product. If you really want gather statistics about Star Wars franchise, use [this GraphQL API](https://studio.apollographql.com/public/star-wars-swapi/variant/current/home) instead.
+This is a full-stack project that displays simple statistic about characters from Star Wars franchise. Note that this is training pet-project rather than unique polished product. If you really want gather statistics about Star Wars franchise, use [this GraphQL API](https://studio.apollographql.com/public/star-wars-swapi/variant/current/home) instead.
 
 Project consists of [Spring Boot backend](backend) and [Vue.js frontend](frontend).
 
@@ -11,11 +11,9 @@ Backend is a REST API. Frontend consumes this API.
 
 Right now the service isn't deployed anywhere so the only way to use it is to clone repository and run it manually.
 
-The service has Swagger UI API docs which can be accessed with ["/swagger-ui"](localhost:8080/swagger-ui) endpoint.
+To run application you will need Docker installed. If so, you can execute command `docker compose -f "docker-compose.yml" up -d --build` in root directory. After that, you can access frontend application with `localhost:8081` path and backend with `localhost:8080` path. Note that you will need a header `Key` with valid API key (not hard to find in source code). Otherwise your request will be forbidden.
 
-Since you have to run project manually, you can either run both applications (frontend and backend) or run only backend REST API. To do the last you can run command './mvnw spring-boot:run' in [backend directory](backend).
-
-If you want to use both applications, you should also run vue.js app with 'npm run serve -- --port 8081' in [frontend directory](frontend). You can access it with ["localshost:8081/"](localshost:8081/) path.
+To see all available backend endpoints you can use Swagger UI with `/swagger-ui` endpoint.
 
 ## Tech stack
 
@@ -28,3 +26,4 @@ If you want to use both applications, you should also run vue.js app with 'npm r
 - OpenAPI
 - Testcontainers
 - Vue.js
+- Docker
