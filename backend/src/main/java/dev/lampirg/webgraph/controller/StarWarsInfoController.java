@@ -26,6 +26,16 @@ public class StarWarsInfoController {
     @Operation(summary = "Find residents from the same planet")
     @ApiResponse(responseCode = "200", description = "Residents")
     @ApiResponse(responseCode = "403", description = "No valid api key", content = @Content)
+    @GetMapping("/all")
+    public Mono<Residents> findAll() {
+        return residentSearcher.findAll()
+                .collectList()
+                .map(Residents::new);
+    }
+
+    @Operation(summary = "Find residents from the same planet")
+    @ApiResponse(responseCode = "200", description = "Residents")
+    @ApiResponse(responseCode = "403", description = "No valid api key", content = @Content)
     @ApiResponse(responseCode = "404", description = "Resident not found", content = @Content)
     @GetMapping("/same-residents")
     public Mono<Residents> findResidentsFromSamePlanet(@Parameter(description = "Resident to find from") @RequestParam String name) {

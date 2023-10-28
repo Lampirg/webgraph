@@ -73,7 +73,7 @@ class StarWarsInfoControllerSecurityTests {
     void givenWrongAuthorization() {
         Mockito.when(apiKeyService.findByApiKey("daba")).thenReturn(Mono.empty());
         testClient.get()
-                .uri("/info/same-residents?name=Luke+Skywalker")
+                .uri("/info/all")
                 .header("Key", "daba")
                 .exchange()
                 .expectStatus().isForbidden();
