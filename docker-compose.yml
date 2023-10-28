@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongoDB
+    hostname: mongo_db
+    ports:
+      - 27017:27017
+    networks:
+      - back
+  
+  backend:
+    build: ./backend
+    image: lampirg/webgraph-backend
+    container_name: backend
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=mongologin
+    #   - MONGO_INITDB_ROOT_PASSWORD=mongopassword
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongo
+    networks:
+      - back
+      - front
+  
+  frontend:
+    build: ./frontend
+    image: lampirg/webgraph-frontend
+    container_name: frontend
+    ports:
+      - 8081:80
+    depends_on:
+      - backend
+    networks:
+      - front
+
+networks:
+  back:
+    driver: bridge 
+  front:
+    driver: bridge
