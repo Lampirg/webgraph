@@ -22,7 +22,7 @@ public class SwapiResidentSearcher implements ResidentSearcher {
 
     public SwapiResidentSearcher(WebClient webClient,
                                  @Value("https://swapi-graphql.netlify.app/.netlify/functions/index") String serviceUrl,
-                                 @Value("graphql-documents/sameplanet.graphql") Resource resource) {
+                                 @Value("classpath:graphql-documents/sameplanet.graphql") Resource resource) {
         this.webClient = webClient.mutate().baseUrl(serviceUrl).build();
         this.resource = resource;
     }
