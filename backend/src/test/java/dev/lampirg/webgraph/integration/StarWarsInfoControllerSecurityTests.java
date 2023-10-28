@@ -1,5 +1,6 @@
 package dev.lampirg.webgraph.integration;
 
+import dev.lampirg.webgraph.model.Resident;
 import dev.lampirg.webgraph.service.apikey.ApiKeyService;
 import dev.lampirg.webgraph.service.resident.ResidentSearcher;
 import dev.lampirg.webgraph.db.ApiHolder;
@@ -38,7 +39,7 @@ class StarWarsInfoControllerSecurityTests {
     void givenExistentName() {
         Mockito.when(apiKeyService.findByApiKey("aba")).thenReturn(Mono.just(ApiHolder.user("User", "aba")));
         Mockito.when(residentSearcher.findResidentsFromSamePlanet("Luke Skywalker"))
-                .thenReturn(Flux.just("C-3PO", "Darth Vader"));
+                .thenReturn(Flux.just(new Resident("C-3PO"), new Resident("Darth Vader")));
         String expected = getTypicalExpectedOutput();
         testClient.get()
                 .uri("/info/same-residents?name=Luke+Skywalker")
@@ -82,7 +83,7 @@ class StarWarsInfoControllerSecurityTests {
     void givenAdmin() {
         Mockito.when(apiKeyService.findByApiKey("aba")).thenReturn(Mono.just(ApiHolder.admin("Admin", "aba")));
         Mockito.when(residentSearcher.findResidentsFromSamePlanet("Luke Skywalker"))
-                .thenReturn(Flux.just("C-3PO", "Darth Vader"));
+                .thenReturn(Flux.just(new Resident("C-3PO"), new Resident("Darth Vader")));
         String expected = getTypicalExpectedOutput();
         testClient.get()
                 .uri("/info/same-residents?name=Luke+Skywalker")

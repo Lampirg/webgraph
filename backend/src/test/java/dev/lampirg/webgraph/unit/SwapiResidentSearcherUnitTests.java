@@ -1,5 +1,6 @@
 package dev.lampirg.webgraph.unit;
 
+import dev.lampirg.webgraph.model.Resident;
 import dev.lampirg.webgraph.service.resident.SwapiResidentSearcher;
 import lombok.SneakyThrows;
 import okhttp3.mockwebserver.MockResponse;
@@ -67,12 +68,14 @@ class SwapiResidentSearcherUnitTests {
     void givenThreeResidents() {
         List<String> expected = List.of("C-3PO", "Darth Vader");
         List<String> actual = residentSearcher.findResidentsFromSamePlanet("Luke Skywalker")
+                .map(Resident::name)
                 .collectList()
                 .block();
         Assertions.assertThat(actual).hasSameElementsAs(expected);
         enqueue();
         expected = List.of("Luke Skywalker", "Darth Vader");
         actual = residentSearcher.findResidentsFromSamePlanet("C-3PO")
+                .map(Resident::name)
                 .collectList()
                 .block();
         Assertions.assertThat(actual).hasSameElementsAs(expected);
@@ -83,6 +86,7 @@ class SwapiResidentSearcherUnitTests {
     void givenOneResident() {
         List<String> expected = List.of();
         List<String> actual = residentSearcher.findResidentsFromSamePlanet("Kor Ga Gha")
+                .map(Resident::name)
                 .collectList()
                 .block();
         Assertions.assertThat(actual).hasSameElementsAs(expected);
@@ -93,6 +97,7 @@ class SwapiResidentSearcherUnitTests {
     void givenNoResidents() {
         Mono<List<String>> actual = residentSearcher
                 .findResidentsFromSamePlanet("I made that up")
+                .map(Resident::name)
                 .collectList();
         Assertions.assertThatThrownBy(actual::block).isInstanceOf(NoSuchElementException.class);
     }

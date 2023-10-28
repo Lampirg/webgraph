@@ -1,5 +1,6 @@
 package dev.lampirg.webgraph.unit;
 
+import dev.lampirg.webgraph.model.Resident;
 import dev.lampirg.webgraph.service.resident.ResidentSearcher;
 import dev.lampirg.webgraph.controller.StarWarsInfoController;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class StarWarsInfoControllerUnitTests {
     @WithMockUser
     void givenExistentName() {
         Mockito.when(residentSearcher.findResidentsFromSamePlanet("Luke Skywalker"))
-                .thenReturn(Flux.just("C-3PO", "Darth Vader"));
+                .thenReturn(Flux.just(new Resident("C-3PO"), new Resident("Darth Vader")));
         String expected = """
                 {
                     data: [

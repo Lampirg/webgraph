@@ -1,7 +1,8 @@
 package dev.lampirg.webgraph.service.resident;
 
+import dev.lampirg.webgraph.model.Resident;
 import reactor.core.publisher.Flux;
 
 public interface ResidentSearcher {
-    Flux<String> findResidentsFromSamePlanet(String name);
+    Flux<Resident> findResidentsFromSamePlanet(String name);
 }

@@ -1,5 +1,6 @@
 package dev.lampirg.webgraph.integration;
 
+import dev.lampirg.webgraph.model.Resident;
 import dev.lampirg.webgraph.service.resident.SwapiResidentSearcher;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
@@ -26,6 +27,7 @@ class SwapiResidentSearcherIntegrationTests {
     @SneakyThrows
     void givenLuke() {
         List<String> actual = residentSearcher.findResidentsFromSamePlanet("Luke Skywalker")
+                .map(Resident::name)
                 .collectList()
                 .block();
         Assertions.assertThat(actual)
@@ -38,6 +40,7 @@ class SwapiResidentSearcherIntegrationTests {
     void givenNoResidents() {
         Mono<List<String>> actual = residentSearcher
                 .findResidentsFromSamePlanet("I made that up")
+                .map(Resident::name)
                 .collectList();
         Assertions.assertThatThrownBy(actual::block).isInstanceOf(NoSuchElementException.class);
     }

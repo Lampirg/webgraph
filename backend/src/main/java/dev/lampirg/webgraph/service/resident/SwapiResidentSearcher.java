@@ -1,6 +1,7 @@
 package dev.lampirg.webgraph.service.resident;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import dev.lampirg.webgraph.model.Resident;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -29,7 +30,7 @@ public class SwapiResidentSearcher implements ResidentSearcher {
 
     @Override
     @SneakyThrows
-    public Flux<String> findResidentsFromSamePlanet(String name) {
+    public Flux<Resident> findResidentsFromSamePlanet(String name) {
         GraphQlClient client = HttpGraphQlClient.builder(webClient).build();
         return client.document(resource.getContentAsString(StandardCharsets.UTF_8))
                 .retrieve("allPeople.people")
@@ -41,15 +42,15 @@ public class SwapiResidentSearcher implements ResidentSearcher {
                         jsonNode.get("homeworld").get("residentConnection").get("residents")
                 )
                 .flatMapMany(this::jsonToFlux)
-                .filter(Predicate.not(charName -> charName.equals(name)));
+                .filter(Predicate.not(resident -> resident.name().equals(name)));
     }
 
-    private Flux<String> jsonToFlux(JsonNode root) {
-        Flux<String> flux = Flux.empty();
+    private Flux<Resident> jsonToFlux(JsonNode root) {
+        Flux<Resident> flux = Flux.empty();
         for (int i = 0; i < root.size(); i++) {
             flux = flux.concatWith(Flux.just(
                     root.get(i).get("name").asText()
-            ));
+            ).map(Resident::new));
         }
         return flux;
     }
