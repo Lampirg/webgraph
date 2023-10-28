@@ -1,6 +1,7 @@
 package dev.lampirg.webgraph.unit;
 
 import dev.lampirg.webgraph.model.Resident;
+import dev.lampirg.webgraph.service.resident.GraphQlRequestResourcesHandler;
 import dev.lampirg.webgraph.service.resident.SwapiResidentSearcher;
 import lombok.SneakyThrows;
 import okhttp3.mockwebserver.MockResponse;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -28,23 +30,26 @@ class SwapiResidentSearcherUnitTests {
     private SwapiResidentSearcher residentSearcher;
 
     private MockWebServer mockWebServer;
-
-    private Resource response;
+    private GraphQlRequestResourcesHandler resourcesHandler;
+    private Resource output;
 
     public SwapiResidentSearcherUnitTests() {
         mockWebServer = new MockWebServer();
+        resourcesHandler = Mockito.mock(GraphQlRequestResourcesHandler.class);
         residentSearcher = new SwapiResidentSearcher(
                 WebClient.create(mockWebServer.url("/").toString()),
                 mockWebServer.url("/").toString(),
-                new ClassPathResource("json/input.graphql")
+                resourcesHandler
         );
-        response = new ClassPathResource("json/output.json");
+        output = new ClassPathResource("json/output.json");
     }
 
     @BeforeEach
     @SneakyThrows
     void setUp() {
         enqueue();
+        Mockito.when(resourcesHandler.getSamePlanetRequest())
+                .thenReturn(new ClassPathResource("json/input.graphql"));
     }
 
     @SneakyThrows
@@ -53,7 +58,7 @@ class SwapiResidentSearcherUnitTests {
                 new MockResponse()
                         .setResponseCode(HttpStatus.OK.value())
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_GRAPHQL_RESPONSE_VALUE)
-                        .setBody(response.getContentAsString(StandardCharsets.UTF_8)));
+                        .setBody(output.getContentAsString(StandardCharsets.UTF_8)));
     }
 
     @AfterEach

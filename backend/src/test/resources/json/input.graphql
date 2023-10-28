@@ -1,3 +1,4 @@
+# Note that this is mocked input that does not represent actual request
 query samePlanet {
     allPeople {
         people {
