@@ -26,7 +26,18 @@ public class SwapiResidentSearcher implements ResidentSearcher {
         this.webClient = webClient.mutate().baseUrl(serviceUrl).build();
         this.resourcesHandler = resourcesHandler;
     }
-    
+
+    @Override
+    @SneakyThrows
+    public Flux<Resident> findAll() {
+        GraphQlClient client = HttpGraphQlClient.builder(webClient).build();
+        return client.document(resourcesHandler.getAllPeopleRequest().getContentAsString(StandardCharsets.UTF_8))
+                .retrieve("allPeople.people")
+                .toEntityList(JsonNode.class)
+                .flatMapMany(Flux::fromIterable)
+                .map(jsonNode -> new Resident(jsonNode.get("name").asText()));
+    }
+
     @Override
     @SneakyThrows
     public Flux<Resident> findResidentsFromSamePlanet(String name) {

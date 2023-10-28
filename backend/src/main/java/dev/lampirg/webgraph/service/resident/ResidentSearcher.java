@@ -4,5 +4,6 @@ import dev.lampirg.webgraph.model.Resident;
 import reactor.core.publisher.Flux;
 
 public interface ResidentSearcher {
+    Flux<Resident> findAll();
     Flux<Resident> findResidentsFromSamePlanet(String name);
 }

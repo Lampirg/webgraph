@@ -23,6 +23,15 @@ class SwapiResidentSearcherIntegrationTests {
     private SwapiResidentSearcher residentSearcher;
 
     @Test
+    @DisplayName("Test findAll method")
+    void testFindAll() {
+        List<Resident> actual = residentSearcher.findAll().collectList().block();
+        Assertions.assertThat(actual)
+                .isNotEmpty()
+                .contains(new Resident("Luke Skywalker"));
+    }
+
+    @Test
     @DisplayName("Test Luke Skywalker")
     @SneakyThrows
     void givenLuke() {
