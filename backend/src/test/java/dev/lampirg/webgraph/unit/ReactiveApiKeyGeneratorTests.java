@@ -1,7 +1,7 @@
 package dev.lampirg.webgraph.unit;
 
 import dev.lampirg.webgraph.db.ApiHolderRepository;
-import dev.lampirg.webgraph.service.apikey.generator.SimpleApiKeyGenerator;
+import dev.lampirg.webgraph.service.apikey.generator.SimpleReactiveApiKeyGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,14 +17,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Unit test SimpleApiKeyGenerator")
 @ExtendWith(MockitoExtension.class)
-class ApiKeyGeneratorTests {
+class ReactiveApiKeyGeneratorTests {
 
     @Mock
     private ApiHolderRepository apiHolderRepository;
     @Mock
     private RandomGenerator randomGenerator;
     @InjectMocks
-    private SimpleApiKeyGenerator apiKeyGenerator;
+    private SimpleReactiveApiKeyGenerator apiKeyGenerator;
 
     @Test
     void givenUniqueString() {
@@ -33,7 +33,7 @@ class ApiKeyGeneratorTests {
                 .thenReturn(key.chars());
         Mockito.when(apiHolderRepository.existsByApiKey(key))
                 .thenReturn(Mono.just(false));
-        String actual = apiKeyGenerator.generateApiKey();
+        String actual = apiKeyGenerator.generateApiKey().block();
         assertThat(actual).isEqualTo(key);
     }
 
@@ -45,7 +45,7 @@ class ApiKeyGeneratorTests {
                 .thenReturn(generated.chars());
         Mockito.when(apiHolderRepository.existsByApiKey(key))
                 .thenReturn(Mono.just(false));
-        String actual = apiKeyGenerator.generateApiKey();
+        String actual = apiKeyGenerator.generateApiKey().block();
         assertThat(actual).isEqualTo(key);
     }
 
@@ -59,7 +59,7 @@ class ApiKeyGeneratorTests {
                 .thenReturn(Mono.just(true));
         Mockito.when(apiHolderRepository.existsByApiKey(unique))
                 .thenReturn(Mono.just(false));
-        String actual = apiKeyGenerator.generateApiKey();
+        String actual = apiKeyGenerator.generateApiKey().block();
         assertThat(actual).isEqualTo(unique);
     }
 }
