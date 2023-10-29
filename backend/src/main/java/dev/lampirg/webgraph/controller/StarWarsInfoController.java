@@ -2,6 +2,7 @@ package dev.lampirg.webgraph.controller;
 
 import dev.lampirg.webgraph.model.Resident;
 import dev.lampirg.webgraph.service.resident.ResidentSearcher;
+import dev.lampirg.webgraph.util.ForbiddenApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -25,12 +26,21 @@ public class StarWarsInfoController {
 
     @Operation(summary = "Find residents from the same planet")
     @ApiResponse(responseCode = "200", description = "Residents")
-    @ApiResponse(responseCode = "403", description = "No valid api key", content = @Content)
+    @ForbiddenApiResponse
+    @GetMapping("/all")
+    public Mono<Residents> findAll() {
+        return residentSearcher.findAll()
+                .collectList()
+                .map(Residents::new);
+    }
+
+    @Operation(summary = "Find residents from the same planet")
+    @ApiResponse(responseCode = "200", description = "Residents")
+    @ForbiddenApiResponse
     @ApiResponse(responseCode = "404", description = "Resident not found", content = @Content)
     @GetMapping("/same-residents")
     public Mono<Residents> findResidentsFromSamePlanet(@Parameter(description = "Resident to find from") @RequestParam String name) {
         return residentSearcher.findResidentsFromSamePlanet(name)
-                .map(Resident::new)
                 .collectList()
                 .map(Residents::new);
     }

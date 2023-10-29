@@ -1,9 +1,9 @@
 package dev.lampirg.webgraph.service.resident;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import dev.lampirg.webgraph.model.Resident;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.graphql.client.GraphQlClient;
 import org.springframework.graphql.client.HttpGraphQlClient;
 import org.springframework.stereotype.Service;
@@ -18,20 +18,31 @@ public class SwapiResidentSearcher implements ResidentSearcher {
 
     private final WebClient webClient;
 
-    private Resource resource;
+    private final GraphQlRequestResourcesHandler resourcesHandler;
 
     public SwapiResidentSearcher(WebClient webClient,
                                  @Value("https://swapi-graphql.netlify.app/.netlify/functions/index") String serviceUrl,
-                                 @Value("classpath:graphql-documents/sameplanet.graphql") Resource resource) {
+                                 GraphQlRequestResourcesHandler resourcesHandler) {
         this.webClient = webClient.mutate().baseUrl(serviceUrl).build();
-        this.resource = resource;
+        this.resourcesHandler = resourcesHandler;
     }
 
     @Override
     @SneakyThrows
-    public Flux<String> findResidentsFromSamePlanet(String name) {
+    public Flux<Resident> findAll() {
         GraphQlClient client = HttpGraphQlClient.builder(webClient).build();
-        return client.document(resource.getContentAsString(StandardCharsets.UTF_8))
+        return client.document(resourcesHandler.getAllPeopleRequest().getContentAsString(StandardCharsets.UTF_8))
+                .retrieve("allPeople.people")
+                .toEntityList(JsonNode.class)
+                .flatMapMany(Flux::fromIterable)
+                .map(jsonNode -> new Resident(jsonNode.get("name").asText()));
+    }
+
+    @Override
+    @SneakyThrows
+    public Flux<Resident> findResidentsFromSamePlanet(String name) {
+        GraphQlClient client = HttpGraphQlClient.builder(webClient).build();
+        return client.document(resourcesHandler.getSamePlanetRequest().getContentAsString(StandardCharsets.UTF_8))
                 .retrieve("allPeople.people")
                 .toEntityList(JsonNode.class)
                 .flatMapMany(Flux::fromIterable)
@@ -40,16 +51,16 @@ public class SwapiResidentSearcher implements ResidentSearcher {
                 .map(jsonNode ->
                         jsonNode.get("homeworld").get("residentConnection").get("residents")
                 )
-                .flatMapMany(this::jsonToFlux)
-                .filter(Predicate.not(charName -> charName.equals(name)));
+                .flatMapMany(this::neighbourJsonToFlux)
+                .filter(Predicate.not(resident -> resident.name().equals(name)));
     }
 
-    private Flux<String> jsonToFlux(JsonNode root) {
-        Flux<String> flux = Flux.empty();
+    private Flux<Resident> neighbourJsonToFlux(JsonNode root) {
+        Flux<Resident> flux = Flux.empty();
         for (int i = 0; i < root.size(); i++) {
             flux = flux.concatWith(Flux.just(
                     root.get(i).get("name").asText()
-            ));
+            ).map(Resident::new));
         }
         return flux;
     }

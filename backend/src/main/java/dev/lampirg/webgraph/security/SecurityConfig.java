@@ -20,7 +20,6 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -73,7 +72,7 @@ public class SecurityConfig {
         http
                 .authorizeExchange(exchangeSpec -> exchangeSpec
                         .pathMatchers("/key/**").hasRole("ADMIN")
-                        .pathMatchers("/info/**").hasRole("USER")
+                        .pathMatchers("/info/**").authenticated()
                         .anyExchange().permitAll())
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .cors(Customizer.withDefaults())
