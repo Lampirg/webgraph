@@ -1,7 +1,7 @@
 package dev.lampirg.webgraph;
 
 import dev.lampirg.webgraph.db.ApiHolder;
-import dev.lampirg.webgraph.db.EntityInformationProvider;
+import dev.lampirg.webgraph.config.EntityInformationProvider;
 import dev.lampirg.webgraph.db.ReactiveMongoApiHolderRepository;
 import org.assertj.core.api.Assertions;
 import org.jetbrains.annotations.NotNull;
