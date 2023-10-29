@@ -3,6 +3,9 @@ services:
   mongo:
     image: mongo:latest
     container_name: mongoDB
+    volumes:
+      - application:/data/db
+      - application:/data/configdb
     hostname: mongo_db
     ports:
       - 27017:27017
@@ -13,6 +16,8 @@ services:
     build: ./backend
     image: lampirg/webgraph-backend
     container_name: backend
+    volumes:
+      - application:/tmp
     ports:
       - 8080:8080
     depends_on:
@@ -37,3 +42,6 @@ networks:
     driver: bridge 
   front:
     driver: bridge
+
+volumes:
+  application:
