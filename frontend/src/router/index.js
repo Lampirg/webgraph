@@ -1,4 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
+import SameResidentsView from '../views/SameResidentsView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,7 +13,13 @@ const router = createRouter({
     {
       path: '/find',
       name: 'find',
-      component: () => import('../views/SameResidentsView.vue')
+      component: SameResidentsView,
+      props: route => ({ ...route.query, ...route.params })
+    },
+    {
+      path: '/all',
+      name: 'all',
+      component: () => import('../views/AllResidentsView.vue')
     }
   ]
 })
