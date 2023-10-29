@@ -24,7 +24,7 @@ public class StarWarsInfoController {
 
     private final ResidentSearcher residentSearcher;
 
-    @Operation(summary = "Find residents from the same planet")
+    @Operation(summary = "Find all residents")
     @ApiResponse(responseCode = "200", description = "Residents")
     @ForbiddenApiResponse
     @GetMapping("/all")

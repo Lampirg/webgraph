@@ -2,7 +2,7 @@ package dev.lampirg.webgraph.service.apikey;
 
 import dev.lampirg.webgraph.db.ApiHolder;
 import dev.lampirg.webgraph.db.ApiHolderRepository;
-import dev.lampirg.webgraph.service.apikey.generator.ApiKeyGenerator;
+import dev.lampirg.webgraph.service.apikey.generator.ReactiveApiKeyGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class ApiKeyService {
 
-    private final ApiKeyGenerator apiKeyGenerator;
+    private final ReactiveApiKeyGenerator apiKeyGenerator;
     private final ApiHolderRepository apiHolderRepository;
 
     public Flux<ApiHolder> findAll() {
@@ -27,9 +27,10 @@ public class ApiKeyService {
     }
 
     public Mono<Void> save(String username) {
-        return apiHolderRepository.save(ApiHolder.user(
-                username, apiKeyGenerator.generateApiKey()
-        )).then();
+        return apiKeyGenerator.generateApiKey()
+                .map(key -> ApiHolder.user(username, key))
+                .flatMap(apiHolderRepository::save)
+                .then();
     }
 
     public Mono<Void> save(ApiHolder apiHolder) {

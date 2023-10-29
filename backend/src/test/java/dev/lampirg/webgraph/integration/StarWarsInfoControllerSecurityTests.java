@@ -6,6 +6,7 @@ import dev.lampirg.webgraph.service.resident.ResidentSearcher;
 import dev.lampirg.webgraph.db.ApiHolder;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +21,9 @@ import java.util.NoSuchElementException;
 
 @SpringBootTest
 @ActiveProfiles("test")
+@Tag("integration")
+@Tag("security")
+@Tag("controller")
 class StarWarsInfoControllerSecurityTests {
 
     private WebTestClient testClient;

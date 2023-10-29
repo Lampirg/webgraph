@@ -5,6 +5,7 @@ import dev.lampirg.webgraph.model.Resident;
 import dev.lampirg.webgraph.service.resident.ResidentSearcher;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import java.util.NoSuchElementException;
         excludeAutoConfiguration = ReactiveSecurityAutoConfiguration.class
 )
 @DisplayName("Unit test StarWarsInfoController")
+@Tag("unit")
+@Tag("controller")
 class StarWarsInfoControllerUnitTests {
 
     @Autowired

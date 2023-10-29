@@ -3,6 +3,7 @@ package dev.lampirg.webgraph.integration;
 import dev.lampirg.webgraph.service.apikey.ApiKeyService;
 import dev.lampirg.webgraph.db.ApiHolder;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,9 @@ import reactor.core.publisher.Mono;
 
 @SpringBootTest
 @ActiveProfiles("test")
+@Tag("integration")
+@Tag("security")
+@Tag("controller")
 class AdminControllerSecurtiyTests {
 
     private WebTestClient testClient;
