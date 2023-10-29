@@ -9,6 +9,7 @@ import org.springframework.graphql.client.HttpGraphQlClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
 import java.util.function.Predicate;
@@ -58,7 +59,7 @@ public class SwapiResidentSearcher implements ResidentSearcher {
     private Flux<Resident> neighbourJsonToFlux(JsonNode root) {
         Flux<Resident> flux = Flux.empty();
         for (int i = 0; i < root.size(); i++) {
-            flux = flux.concatWith(Flux.just(
+            flux = flux.concatWith(Mono.just(
                     root.get(i).get("name").asText()
             ).map(Resident::new));
         }
