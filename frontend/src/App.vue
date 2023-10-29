@@ -1,5 +1,5 @@
 <script setup>
-import { RouterView } from 'vue-router'
+import { RouterLink, RouterView } from 'vue-router'
 import HeaderComponent from './components/HelloWorld.vue'
 </script>
 
@@ -9,7 +9,10 @@ import HeaderComponent from './components/HelloWorld.vue'
 
     <div class="wrapper">
       <HeaderComponent />
-
+      <nav>
+        <RouterLink :to="{  name: 'find', query: { toSearch: 'R2-D2' } }">Find neighbors</RouterLink>
+        <RouterLink to="/all">Find all</RouterLink>
+      </nav>
     </div>
   </header>
 
@@ -64,7 +67,7 @@ nav a:first-of-type {
   }
 
   header .wrapper {
-    display: flex;
+    display: block;
     place-items: flex-start;
     flex-wrap: wrap;
   }
