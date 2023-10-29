@@ -12,13 +12,14 @@ import java.util.random.RandomGenerator;
 public class SimpleApiKeyGenerator implements ApiKeyGenerator {
 
     private final ApiHolderRepository apiHolderRepository;
+    private final RandomGenerator randomGenerator;
 
     @Override
     @SneakyThrows
     public String generateApiKey() {
         String key;
         do {
-            key = RandomGenerator.getDefault().ints('0', 'z' + 1)
+            key = randomGenerator.ints('0', 'z' + 1)
                     .filter(i -> Character.isDigit(i) || Character.isAlphabetic(i))
                     .limit(30)
                     .collect(
