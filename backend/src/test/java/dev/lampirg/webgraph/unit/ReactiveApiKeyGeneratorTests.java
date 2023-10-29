@@ -3,6 +3,7 @@ package dev.lampirg.webgraph.unit;
 import dev.lampirg.webgraph.db.ApiHolderRepository;
 import dev.lampirg.webgraph.service.apikey.generator.SimpleReactiveApiKeyGenerator;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Unit test SimpleApiKeyGenerator")
 @ExtendWith(MockitoExtension.class)
+@Tag("unit")
 class ReactiveApiKeyGeneratorTests {
 
     @Mock

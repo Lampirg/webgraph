@@ -23,6 +23,7 @@ import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 @DisplayName("Unit test SwapiResidentSearcher")
+@Tag("unit")
 class SwapiResidentSearcherUnitTests {
 
     private SwapiResidentSearcher residentSearcher;

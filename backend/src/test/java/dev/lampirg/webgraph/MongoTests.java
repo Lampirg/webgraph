@@ -6,6 +6,7 @@ import dev.lampirg.webgraph.db.ReactiveMongoApiHolderRepository;
 import org.assertj.core.api.Assertions;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
@@ -20,6 +21,7 @@ import java.util.List;
 @DataMongoTest
 @Testcontainers
 @Import({ReactiveMongoApiHolderRepository.class, EntityInformationProvider.class})
+@Tag("integration")
 class MongoTests {
 
     @Container

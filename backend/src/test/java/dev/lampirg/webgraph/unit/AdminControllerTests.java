@@ -3,6 +3,7 @@ package dev.lampirg.webgraph.unit;
 import dev.lampirg.webgraph.service.apikey.ApiKeyService;
 import dev.lampirg.webgraph.controller.AdminController;
 import dev.lampirg.webgraph.db.ApiHolder;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import reactor.core.publisher.Mono;
         controllers = AdminController.class,
         excludeAutoConfiguration = ReactiveSecurityAutoConfiguration.class
 )
+@Tag("unit")
+@Tag("controller")
 class AdminControllerTests {
 
     @Autowired
