@@ -1,6 +1,6 @@
 # Simple Star Wars statistics
 
-This is a full-stack project that displays simple statistic about characters from Star Wars franchise. Note that this is training pet-project rather than unique polished product. If you really want gather statistics about Star Wars franchise, use [this GraphQL API](https://studio.apollographql.com/public/star-wars-swapi/variant/current/home) instead.
+This is a full-stack project that displays simple statistic about characters from Star Wars franchise. Note that this is more of a training pet-project rather than unique polished product. If you really want gather statistics about Star Wars franchise, use [this GraphQL API](https://studio.apollographql.com/public/star-wars-swapi/variant/current/home) instead.
 
 Project consists of [Spring Boot backend](backend) and [Vue.js frontend](frontend).
 
