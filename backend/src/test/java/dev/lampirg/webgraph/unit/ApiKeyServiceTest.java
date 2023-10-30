@@ -26,7 +26,7 @@ class ApiKeyServiceTest {
     @Test
     void saveGivenUniqueKey() {
         String key = "ThisForSureShouldBe30CharsLong";
-        Mockito.when(apiKeyGenerator.generateApiKey())
+        Mockito.when(apiKeyGenerator.generateApiKeyFromUsername("aboba"))
                 .thenReturn(Mono.just(key));
         Mockito.when(apiHolderRepository.existsByApiKey(key))
                 .thenReturn(Mono.just(false));
@@ -39,7 +39,7 @@ class ApiKeyServiceTest {
     void saveGivenNonUniqueKey() {
         String nonUnique = "ThisIsNonUniqueAndStill30Chars";
         String unique = "ThisForSureShouldBeAUniqueWord";
-        Mockito.when(apiKeyGenerator.generateApiKey())
+        Mockito.when(apiKeyGenerator.generateApiKeyFromUsername("aboba"))
                 .thenReturn(Mono.just(nonUnique))
                 .thenReturn(Mono.just(unique));
         Mockito.when(apiHolderRepository.existsByApiKey(nonUnique))
