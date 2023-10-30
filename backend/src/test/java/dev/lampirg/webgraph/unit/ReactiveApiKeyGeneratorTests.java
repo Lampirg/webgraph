@@ -22,46 +22,36 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ReactiveApiKeyGeneratorTests {
 
     @Mock
-    private ApiHolderRepository apiHolderRepository;
-    @Mock
     private RandomGenerator randomGenerator;
     @InjectMocks
     private SimpleReactiveApiKeyGenerator apiKeyGenerator;
 
     @Test
-    void givenUniqueString() {
+    void given30Chars() {
         String key = "ThisForSureShouldBe30CharsLong";
         Mockito.when(randomGenerator.ints('0', 'z' + 1))
                 .thenReturn(key.chars());
-        Mockito.when(apiHolderRepository.existsByApiKey(key))
-                .thenReturn(Mono.just(false));
         String actual = apiKeyGenerator.generateApiKey().block();
         assertThat(actual).isEqualTo(key);
     }
 
     @Test
-    void givenRubbish() {
+    void given30CharsWithRubbish() {
         String generated = "This___For___Sure___Should___Be___30___Chars___Long";
         String key = generated.replaceAll("_", "");
         Mockito.when(randomGenerator.ints('0', 'z' + 1))
                 .thenReturn(generated.chars());
-        Mockito.when(apiHolderRepository.existsByApiKey(key))
-                .thenReturn(Mono.just(false));
         String actual = apiKeyGenerator.generateApiKey().block();
         assertThat(actual).isEqualTo(key);
     }
 
     @Test
-    void givenFirstNonUnique() {
-        String nonUnique = "ThisIsNonUniqueAndStill30Chars";
-        String unique = "ThisForSureShouldBeAUniqueWord";
+    void given38Chars() {
+        String generated = "ThisForSureShouldBe30CharsLongAndFive";
+        String key = generated.substring(0, 30);
         Mockito.when(randomGenerator.ints('0', 'z' + 1))
-                .thenReturn(nonUnique.chars(), unique.chars());
-        Mockito.when(apiHolderRepository.existsByApiKey(nonUnique))
-                .thenReturn(Mono.just(true));
-        Mockito.when(apiHolderRepository.existsByApiKey(unique))
-                .thenReturn(Mono.just(false));
+                .thenReturn(generated.chars());
         String actual = apiKeyGenerator.generateApiKey().block();
-        assertThat(actual).isEqualTo(unique);
+        assertThat(actual).hasSize(30).isEqualTo(key);
     }
 }
