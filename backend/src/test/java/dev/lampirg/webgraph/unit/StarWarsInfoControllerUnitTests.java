@@ -49,27 +49,30 @@ class StarWarsInfoControllerUnitTests {
 
     @Test
     @DisplayName("Test findAll with pagination")
-    void findAllPaged() {
+    void findAllPagedGivenDefaultPagination() {
         Mockito.when(residentSearcher.findAll())
                 .thenReturn(Flux.just(new Resident("C-3PO"), new Resident("Darth Vader")));
-        String expected = getTypicalOutput();
         testClient.get()
                 .uri("/info/all/paged")
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
                 .expectBody()
-                .jsonPath("$.last").isEqualTo(true)
-                .jsonPath("$.totalElements").isEqualTo(2)
-                .jsonPath("$.content.length()").isEqualTo(2);
+                .jsonPath("$.data.length()").isEqualTo(2)
+                .jsonPath("$.page.current").isEqualTo(0)
+                .jsonPath("$.page.total").isEqualTo(1)
+                .jsonPath("$.page.hasNext").isEqualTo(false)
+                .jsonPath("$.page.hasPrev").isEqualTo(false);
     }
 
     @Test
     @DisplayName("Test findAll paginated by one element")
     void findAllPagedByOne() {
         Mockito.when(residentSearcher.findAll())
-                .thenReturn(Flux.just(new Resident("C-3PO"), new Resident("Darth Vader")));
-        String expected = getTypicalOutput();
+                .thenReturn(
+                        Flux.just("C-3PO", "Darth Vader", "Luke Skywalker")
+                                .map(Resident::new)
+                );
         testClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/info/all/paged")
@@ -80,9 +83,9 @@ class StarWarsInfoControllerUnitTests {
                 .expectStatus().is2xxSuccessful()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
                 .expectBody()
-                .jsonPath("$.last").isEqualTo(true)
-                .jsonPath("$.totalElements").isEqualTo(2)
-                .jsonPath("$.content.length()").isEqualTo(1);
+                .jsonPath("$.data.length()").isEqualTo(1)
+                .jsonPath("$.page.next").isEqualTo("/info/all/paged?page=2&size=1")
+                .jsonPath("$.page.prev").isEqualTo("/info/all/paged?page=0&size=1");
     }
 
     @NotNull
