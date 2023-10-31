@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "name": "Luke Skywalker"
+    },
+    {
+      "name": "R2-D2"
+    }
+  ],
+  "page": {
+    "current": 0,
+    "total": 1,
+    "hasNext": false,
+    "hasPrev": false,
+    "next": null,
+    "prev": null
+  }
+}

@@ -1,5 +1,6 @@
-package dev.lampirg.webgraph.db;
+package dev.lampirg.webgraph.config;
 
+import dev.lampirg.webgraph.db.ApiHolder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.mapping.BasicMongoPersistentEntity;

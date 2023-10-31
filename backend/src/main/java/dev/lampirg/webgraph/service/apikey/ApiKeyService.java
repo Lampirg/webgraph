@@ -27,7 +27,10 @@ public class ApiKeyService {
     }
 
     public Mono<Void> save(String username) {
-        return apiKeyGenerator.generateApiKey()
+        return Mono.just(username)
+                .flatMap(apiKeyGenerator::generateApiKeyFromUsername)
+                .filterWhen(s -> apiHolderRepository.existsByApiKey(s).map(b -> !b))
+                .repeatWhenEmpty(Flux::repeat)
                 .map(key -> ApiHolder.user(username, key))
                 .flatMap(apiHolderRepository::save)
                 .then();

@@ -1,9 +1,9 @@
 package dev.lampirg.webgraph.integration;
 
+import dev.lampirg.webgraph.db.ApiHolder;
 import dev.lampirg.webgraph.model.Resident;
 import dev.lampirg.webgraph.service.apikey.ApiKeyService;
 import dev.lampirg.webgraph.service.resident.ResidentSearcher;
-import dev.lampirg.webgraph.db.ApiHolder;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
